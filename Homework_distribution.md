@@ -35,5 +35,6 @@ Questions:
 - Do the same for other variables (predict parents education based on grades & study time for example)
 
 Techniques: Machine learning methodologies
+Luca will try with neural nets
 
 (The focus of Mattia & Luca is on prediction while Pau will focus more on explainability)
