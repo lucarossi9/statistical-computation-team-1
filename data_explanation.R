@@ -42,7 +42,7 @@ ggplot(data, aes(x = G3)) +
   facet_wrap(~Mjob)
 
 # linear model
-M1<-lm(G3~sex+age+address+famsize+Pstatus+Medu+Fedu+Mjob+Fjob+reason+guardian+traveltime+studytime+failures+schoolsup+famsup+paid+activities+nursery+higher+internet+romantic+famrel+freetime+goout+Dalc+Walc+health+absences+G1+G2,data)
+M1<-lm(G3~.,data)
 print(summary(M1))
 plot(predict(M1), residuals(M1)) #check homogeneity of variance
 plot(rstudent(M1)) # outliers
@@ -52,7 +52,7 @@ influencePlot(M1)
 # Multicolinearity
 vif(M1) 
 # remove G1 to avoid variance inflation
-M1<-lm(G3~sex+age+address+famsize+Pstatus+Medu+Fedu+Mjob+Fjob+reason+guardian+traveltime+studytime+failures+schoolsup+famsup+paid+activities+nursery+higher+internet+romantic+famrel+freetime+goout+Dalc+Walc+health+absences+G2,data)
+M1<-lm(G3~.,data[-c(31)])
 vif(M1)
 
 # Variable relevance
@@ -98,24 +98,104 @@ plot(cooks.distance(M3), ylim=c(0.00,0.05), cex=.75)
 
 ### Generalized linear models 
 # I still have to deal with the problem of an imbalanced data set ()
-data$G3[data$G3 < 10] <- 0
-data$G3[data$G3 >= 10] <- 1
+# data2 - dataset for classifications
+data2 <- data
+data2$G3[data2$G3 < 10] <- 0
+data2$G3[data2$G3 >= 10] <- 1
+library(dplyr)
+data.train <- sample_frac(data2, 0.7)
+train_index <- as.numeric(rownames(data.train))
+data.test <- data2[-train_index, ]
 #data <- data[-c(31:32)]
 library(party)
-cf1 <- cforest(G3~., data, control=cforest_unbiased(mtry=2,ntree=50))
+cf1 <- cforest(G3~., data.train, control=cforest_unbiased(mtry=2,ntree=50))
 varimp(cf1)
-data <- data[-c(3, 5, 6, 10, 11, 12, 13, 17, 18, 19, 20, 22, 23, 24, 25, 26, 29, 30)]
-M4<-glm(G3~., data, family = binomial(link = "logit"))
+data.train <- data.train[-c(3, 5, 6, 10, 11, 12, 13, 17, 18, 19, 20, 22, 23, 24, 25, 26, 29, 30)]
+M4<-glm(G3~., data.train, family = binomial(link = "logit"))
 print(summary(M4))
 print(confint(M4, level = 0.9))
 anova(M4)
-p <- predict(M4)
+p <- predict(M4, data.test)
 p <- exp(p)/(1+exp(p))
 p <- 1*(p > 0.5)
-accuracy <- (sum(data$G3 & p)+sum(!data$G3 & !p))/632
+accuracy <- (sum(data.test$G3 & p)+sum(!data.test$G3 & !p))/190
 cat("Accuracy: ", accuracy)
+# Roc curve to check the performance of the classifier
+library(caret)
+library(pROC)
+confusionMatrix(factor(p), factor(data.test$G3))
+roc <- roc(p, data.test$G3)
+plot(roc)
+plot(roc, add=TRUE, col="blue")
+legend("bottomright", legend=c("Empirical", "Smoothed"),
+       col=c(par("fg"), "blue"), lwd=2)
+plot(roc, print.auc=TRUE, auc.polygon=TRUE, grid=c(0.1, 0.2),
+     grid.col=c("green", "red"), max.auc.polygon=TRUE,
+     auc.polygon.col="lightblue", print.thres=TRUE)
+
+# giving more importance to detect failed students
+library(survey)
+freq <- sum(data.train$G3[data.train$G3 > 0])/442
+freq <- freq/(1-freq)
+# freq <- 7 
+data.train$w <- (1-data.train$G3)*freq + data.train$G3
+design.ps <- svydesign(ids=~1, weights=~w, data=data.train)
+M5 <- svyglm(G3 ~sex+Mjob+failures+Dalc+Walc+G1+G2, design=design.ps, family = binomial(link = "logit"))
+summary(M5)
+p <- predict(M5, data.test)
+p <- exp(p)/(1+exp(p))
+p <- 1*(p > 0.5)
+accuracy <- (sum(data.test$G3 & p)+sum(!data.test$G3 & !p))/190
+cat("Accuracy: ", accuracy)
+library(caret)
+library(pROC)
+confusionMatrix(factor(p), factor(data.test$G3))
+roc <- roc(p, data.test$G3)
+plot(roc)
+plot(roc, add=TRUE, col="blue")
+legend("bottomright", legend=c("Empirical", "Smoothed"),
+       col=c(par("fg"), "blue"), lwd=2)
+plot(roc, print.auc=TRUE, auc.polygon=TRUE, grid=c(0.1, 0.2),
+     grid.col=c("green", "red"), max.auc.polygon=TRUE,
+     auc.polygon.col="lightblue", print.thres=TRUE)
+
 
 # classification improving the grade or not 
+data3 <- data
+data3$G3[data3$G3-data3$G2 <= 0] <- 0
+data3$G3[data3$G3-data3$G2 > 0] <- 1
+#data3$DG <- data3$G2-data3$G1
+library(dplyr)
+data.train <- sample_frac(data3, 0.7)
+train_index <- as.numeric(rownames(data.train))
+data.test <- data3[-train_index, ]
+
+library(party)
+cf1 <- cforest(G3~., data.train, control=cforest_unbiased(mtry=2,ntree=50))
+varimp(cf1)
+data.train <- data.train[c(3, 6, 9, 10, 11, 12, 13, 14, 16, 17, 24, 25, 27, 28 , 31, 32)]
+M4<-glm(G3~., data.train, family = binomial(link = "logit"))
+print(summary(M4))
+print(confint(M4, level = 0.9))
+anova(M4)
+p <- predict(M4, data.test)
+p <- exp(p)/(1+exp(p))
+p <- 1*(p > 0.5)
+accuracy <- (sum(data.test$G3 & p)+sum(!data.test$G3 & !p))/190
+cat("Accuracy: ", accuracy)
+library(caret)
+library(pROC)
+confusionMatrix(factor(p), factor(data.test$G3))
+roc <- roc(p, data.test$G3)
+plot(roc)
+plot(roc, add=TRUE, col="blue")
+legend("bottomright", legend=c("Empirical", "Smoothed"),
+       col=c(par("fg"), "blue"), lwd=2)
+plot(roc, print.auc=TRUE, auc.polygon=TRUE, grid=c(0.1, 0.2),
+     grid.col=c("green", "red"), max.auc.polygon=TRUE,
+     auc.polygon.col="lightblue", print.thres=TRUE)
+
+
 
 ## Want to implement GPs or Bayesian linear regression
 
