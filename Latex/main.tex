@@ -197,7 +197,17 @@ and for each point we used different statistical methods.
 
 \section*{4. Machine Learning}
 
+All the models have been trained with a 80 to 20 percentage split for training to testing and implemented using the Sklearn library.
 
+\subsection*{Baseline}
+The baseline is a constant prediction model which outputs always the most frequent class ( in our dataset is 11 ), this achieves an accuracy of 16 percent.
+\subsection*{Logistic Regression}
+Logistic regression is a statistical model that in its basic form uses a logistic function to estimate the probabilities for a multivariate dependent variable: $$p=\frac{1}{1+b^{-\left(\beta_{0}+\beta_{1} x_{1}+\beta_{2} x_{2}+\cdots+\beta_{m} x_{m}\right)}}$$
+Our model with L2 loss and balanced weights achieved an accuracy of 10.7 percent. 
+\subsection*{Random Forest}
+Random forests are an ensemble learning method, used for classification in this case, that operates by constructing a multitude of decision trees at training time and correct for decision trees' habit of overfitting to their training set. Our model with max depth of a tree equal to 2 achieved an accuracy of 12.3 percent.
+\subsection*{XGboost}
+XGboost is a gradient boosting is a machine learning technique, used for classification in this case, which produces a prediction model in the form of an ensemble of weak prediction models, typically decision trees. In particular XGboost is also connected to the Newton-Raphson method. Our model with max depth of a tree equal to 3 achieved an accuracy of 23.8 percent.
 
 
 
