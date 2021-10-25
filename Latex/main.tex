@@ -64,7 +64,7 @@
 %%% Begin document
 \begin{document}
 \maketitle
-\section{Introduction}
+\section*{Introduction}
 In this project we aimed to analyse a database containing information about a sample of students attending a Portuguese language course in two possible different schools ('Gabriel Pereira' or 'Mousinho da Silveira'). For each student there are different attributes related both to their academic performances and to their family context. The table in the next page describes what are the variables that we consider, we can notice that some of them are strictly related with the student academic life (for example "G1","G2","G3","absences" and "studytime") and others tend to describe the student social context, as the family (for example "famsize","Mjob" and "Fjob") and the social life.
  
 \begin{figure}[h]\centering
@@ -192,7 +192,7 @@ distribution is normal.
 
 \begin{figure}[h]\centering
 \includegraphics[scale=0.44]{hyp_test_G3_FvsM.png}
-\caption{results of the three hypothesis tests between male and female final grades}
+\caption{Results of the three hypothesis tests between male and female final grades.}
 \end{figure}
 
 As we can observe, the two sides test has a small p value, which makes clear
@@ -204,7 +204,7 @@ We studied also if there is difference between grades of first and second period
 \begin{figure}[h]\centering
 \includegraphics[scale=0.44]{hyp_test_G1_FvsM.png}
 \includegraphics[scale=0.44]{hyp_test_G2_FvsM.png}
-\caption{results of the three hypothesis tests between male and female first and second period grades, on the left and on the right respectively}
+\caption{Results of the three hypothesis tests between male and female first and second period grades, on the left and on the right respectively.}
 \end{figure}
 
 This difference is evident also in the first and the second period grades.
@@ -222,7 +222,7 @@ hypothesis tests to verify the truthfulness of this affirmation.
 
 \begin{figure}[h]\centering
 \includegraphics[scale=0.44]{hyp_test_MvsF_study_time.png}
-\caption{hypothesis test between male and female study time}
+\caption{Hypothesis test between male and female study time.}
 \end{figure}
 
 The test confirms that girls spend more time studying than boys.
@@ -256,8 +256,8 @@ is statistically true.
 \begin{figure}[h]\centering
 \includegraphics[scale=0.44]{hyp_test_study_time_2vs3.png}
 \includegraphics[scale=0.44]{hyp_test_study_time_3vs4.png}
-\caption{test between people who study less vs people who study more than five hours on the left and test between people who study from 5 to 10 hours
-vs people who study more than ten hours on the right}
+\caption{Test between people who study less vs people who study more than five hours on the left and test between people who study from 5 to 10 hours
+vs people who study more than ten hours on the right.}
 \end{figure}
 
 As we observe from the outputs, the first test makes clear that there is a
@@ -282,6 +282,8 @@ Standard error & $0.0393112727067965$ \\
 \end{center}
 \\The $r-$coefficient is negative and overall is really low, so it credits our idea of non correlation between age and Final grades. The heatmap below shows the relationships between the two of them.
 
+\medskip
+\medskip
 \begin{figure}[h]\centering
 \includegraphics[scale=0.45]{age.png}
 \caption{Correlation between Age and Final grades.}
@@ -299,7 +301,7 @@ We can notice that the mean of grades for students with big family is a bit lowe
 
 \begin{figure}[h]\centering
 \includegraphics[scale=0.45]{hyp_test_famsize.png}
-\caption{test between student with big vs  small families.}
+\caption{Test between student with big vs  small families.}
 \end{figure}
 
 From the test we notice that this difference is not significant, in fact
@@ -315,7 +317,7 @@ In the figure above we can notice that then mean of grades for students with par
 
 \begin{figure}[h]\centering
 \includegraphics[scale=0.45]{hyp_test_Pstatus.png}
-\caption{test between student with big vs  small families.}
+\caption{Test between student with big vs  small families.}
 \end{figure}
 
 The hypothesis test confirm that there is no evidence to believe that the 
@@ -347,7 +349,7 @@ In the figure below we show a summary graphic for the correlation between Family
 
 \begin{figure}[h]\centering
 \includegraphics[scale=0.5]{hyp_test_femrel.png}
-\caption{hypothesis test based on family relations quality.}
+\caption{Hypothesis test based on family relations quality.}
 \end{figure}
 
 Once again the hypothesis test confirm the result obtained by graphic visualization, in fact the two sides test has a p value of 23 percent, 
@@ -366,7 +368,7 @@ techniques. Firstly we tried to plot an histogram with the distribution of the v
 \begin{figure}[h]
 \includegraphics[scale=0.5]{G3_distribution.png}
 \includegraphics[scale=0.5]{qq-plot_G3.png}
-\caption{comparing normal distribution with G3 histogram and qq-plot}
+\caption{Comparing normal distribution with G3 histogram and qq-plot.}
 \end{figure}
 
 As we can notice from the first plot we can already think that the distributions of the variable is not normal. In fact G3 has too many data in the tails, which underline that it must not be normal.
