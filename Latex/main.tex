@@ -192,6 +192,24 @@ and for each point we used different statistical methods.
 
 \section*{1. Correlations and Hypothesis testing}
 
+\section*{2. normality of final grades}
+
+To understand whether variable G3 has normal distribution we used different
+techniques. Firstly we tried to plot an histogram with the distribution of the variable. Then over the histogram we plotted a line-plot of a gaussian with same mean and same variance as the variable.
+
+\begin{figure}[h]
+\includegraphics[scale=0.5]{G3_distribution.png}
+\includegraphics[scale=0.5]{qq-plot_G3.png}
+\caption{comparing normal distribution with G3 histogram and qq-plot}
+\end{figure}
+
+As we can notice from the first plot we can already think that the distributions of the variable is not normal. In fact G3 has too many data in the tails, which underline that it must not be normal.
+
+Just to be sure that our data are actually not normal we then apply more quantitative tests: QQ-plot and Shapiro-Wilks test.
+The results make clear that the three distributions can't be normal, in fact the p value of Shapiro test are smaller than 10e-17, which give no evidence to accept the null hypothesis. The QQ-plots then confirms that we can't believe that the three distributions are normal.
+
+We also tried to understand whether it can be normal without the outliers, but again the Shapiro test has a really small p value: 10e-6.
+
 \section*{3. Grades}
 
 
