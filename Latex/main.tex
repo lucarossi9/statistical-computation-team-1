@@ -165,32 +165,116 @@ and for each point we used different statistical methods.
 
 
 \section*{1. Correlations and Hypothesis testing}
-
+In this part we study if there's any correlations between variables, for doing that we calculated Pearson correlation coefficient that measures linear correlation between two sets of data.
 
 \begin{itemize}
-\item Correlation between Study time and Grades
+\item \textbf{Correlation between Study time and Grades}
+\\Before running the calculation our $a$ $priori$ estimation was that the time of studying influences the grades in a positive way, in theory the more you study the more you succeed in tests. Oppositely, the less you study the more you fail at tests. So, analysing the $r$ coefficient, we got these results:
+\begin{center}
+\begin{tabular}{|p{3cm}|p{4cm}|p{4cm}|}
+ & Grades & Failures\\
+\hline
+$r$ coefficient & $0.249788689998863$ & $-0.14744054515158145$\\
+\hline
+Standard error & $0.036861080126113825$ & $0.03845941964984769$\\
+\hline
+\end{tabular}
+\end{center}
+
+\\As we expected there's a positive correlation between Study time and Final grades, and a negative correlation between Study time and Failures. However, the value of the coefficient in both cases is pretty low, so it doesn't seem to be a great correlation between the two. 
 
 \begin{figure}[h]\centering
-\includegraphics[scale=0.5]{g3-st.png}
+\includegraphics[scale=0.42]{g3-st.png}\quad\includegraphics[scale=0.42]{failures.png}
+\caption{Study times - Final grades and Failures.}
+\end{figure}
+
+In the above figure we can observe two heatmaps describing the correlations we've just studied. The higher is the color in the scale the higher is the amount of students with a certain match 'final grade'-'study time'.
+
+
+\item \textbf{Correlation between Sex and academic performances}
+\\For the gender correlation we didn't have precise $a$ $priori$ estimations because apparently there's no need to think that belonging to a particular gender can affect grades.
+
+\begin{figure}[h]\centering
+\includegraphics[scale=0.42]{sexgrades.png}\quad\includegraphics[scale=0.42]{distrib.png}
+\caption{Correlation between Gender and Final grades, considering that the total of female is $383$ and the total of males is $266$.}
+\end{figure}
+
+The figure above shows that there are more males with lower grades than females and that the grade mean for female is higher than the one for males. At this point we should look if there is any remarkable relationships with the Study time.
+
+\begin{figure}[h]\centering
+\includegraphics[scale=0.42]{sexstudy.png}
+\includegraphics[scale=0.42]{distrib2.png}
+\caption{Correlation between Gender and Study time, considering that the total of female is $383$ and the total of males is $266$.}
+\end{figure}
+
+In the above graphics we can see that the density of men having the value $1$ (the lowest one) of study time is way higher than the girls one. However, for higher value of study time the female density is higher than the males one. We can say that on average males study less than females and, as a consequence, on average they also have lower grades.
+
+
+
+\item \textbf{Correlation between age and Final grade}
+\\Another question could be if the students age can have some consequences on the grades they get. Our $a$ $priori$ expectation was that there is no correlation between the two because each year students have to study subjects appropriate for they ages . We calculated the Pearson's correlation coefficient and obtained:
+\begin{center}
+\begin{tabular}{|p{3cm}|p{4cm}|}
+$r$ coefficient & $-0.008415114730320437$ \\
+\hline
+Standard error & $0.0393112727067965$ \\
+\hline
+\end{tabular}
+\end{center}
+\\The $r-$coefficient is negative and overall is really low, so it credits our idea of non correlation between age and Final grades. The heatmap below shows the relationships between the two of them.
+
+\begin{figure}[h]\centering
+\includegraphics[scale=0.42]{age.png}
+\caption{Correlation between Age and Final grades.}
+\end{figure}
+
+
+\item \textbf{Correlation between Student family and grades}
+\\We now study how the family environment impacts on the students academic performances. First we analyse the family size. In the graphic below we compared student with families larger than three people and the ones equal or smaller than three people.
+
+\begin{figure}[h]\centering
+\includegraphics[scale=0.35]{famsize.png}\quad\includegraphics[scale=0.35]{distrib3.png}
+\caption{Correlation between Family size and Final grades, considering that the total of family with less than three people is $192$ and the total of the other ones is $457$.}
+\end{figure}
+We can notice that the mean of grades for students with big family is a bit lower than the one for small family. Furthemore, in higher grades students with small families have higher density than the other ones.
+
+We believe that parents living together can affect students grades in a positive way, probably because a compacted family may create a less stressfull environment for students and therefore can get to higher grades.
+\begin{figure}[h]\centering
+\includegraphics[scale=0.35]{pstatus.png}\quad\includegraphics[scale=0.35]{distrib4.png}
+\caption{Correlation between Parents status and Final grades considering that that total amount of students with parents living together is 569 and for the other ones is 80.}
+\end{figure}
+
+In the figure above we can notice that then mean of grades for students with parents living together and the one with parents living apart is the same. In this case there is no relevant difference between the two density so in this case if parents are separated or not doesn't affect their children grades.
+\\As we said, we believe that good family relationship can affect students grades in a positive way.
+Now we verify the Pearson's correlation coefficient between Family relationships and Final grades:
+\begin{center}
+\begin{tabular}{|p{3cm}|p{4cm}|}
+$r$ coefficient & $0.06336112772983048$ \\
+\hline
+Standard error & $0.03915622520852588$ \\
+\hline
+\end{tabular}
+\end{center}
+Once again the data analysis destroys our $a$ $priori$ expectation, in fact we found a very low correlation coefficient that shows that quality of family relationships doesn't affect students grades.
+
+\begin{figure}[h]\centering
+\includegraphics[scale=0.4]{famrel.png}
 \caption{Study times - Final grades.}
 \end{figure}
 
 
-\item Correlation between Sex and academic performances
+In the figure below we show a summary graphic for the correlation between Family and Final grades.
+\begin{figure}[h]\centering
+\includegraphics[scale=0.5]{family.png}
+\caption{Correlation between Family environment and Final grades.}
+\end{figure}
 
-
-\item Correlation between age and Final grade
-
-
-\item Correlation between Student family and grades
 
 
 \end{itemize}
 
 
 
-
-\section*{1. Correlations and Hypothesis testing}
 
 \section*{2. normality of final grades}
 
