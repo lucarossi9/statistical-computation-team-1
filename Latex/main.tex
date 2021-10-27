@@ -1,4 +1,4 @@
-\documentclass[a4paper, 11pt]{report}
+\documentclass[a4paper, 11pt]{article}
 \pdfpagewidth\paperwidth
 \pdfpageheight\paperheight
 \usepackage[english]{babel}
@@ -22,7 +22,7 @@
 \theoremstyle{definition}
 \newtheorem{definition}{Definizione}[section]
 
-\usepackage{sectsty}
+%\usepackage{sectsty}
 \allsectionsfont{\centering \normalfont\scshape}
 
 
@@ -52,7 +52,7 @@
 		\usefont{OT1}{bch}{b}{n}
 		\normalfont \normalsize \textsc{École Polytechnique Fédérale de Lausanne} \\ [25pt]
 		\horrule{0.5pt} \\[0.4cm]
-		\huge Analysis of students performances \\
+		\huge Analysis of Student Performance \\
 		\horrule{2pt} \\[0.5cm]
 }
 \author{
@@ -62,12 +62,14 @@
 }
 \date{}
 
-
 %%% Begin document
 \begin{document}
 \maketitle
-\section*{Introduction}
-In this project we aimed to analyse a database containing information about a sample of students attending a Portuguese language course in two possible different schools ('Gabriel Pereira' or 'Mousinho da Silveira'). For each student there are different attributes related both to their academic performances and to their family context. The table in the next page describes what are the variables that we consider, we can notice that some of them are strictly related with the student academic life (for example "G1","G2","G3","absences" and "studytime") and others tend to describe the student social context, as the family (for example "famsize","Mjob" and "Fjob") and the social life.
+\newpage
+\tableofcontents
+\newpage
+\section{Introduction}
+In this project we aimed to analyze a database containing information about a sample of students attending a Portuguese language course in two possible different schools ('Gabriel Pereira' or 'Mousinho da Silveira'). For each student there are different attributes related both to their academic performances and to their family context. The table in the next page describes what are the variables that we consider, we can notice that some of them are strictly related with the student academic life (for example "G1","G2","G3","absences" and "studytime") and others tend to describe the student social context, as the family (for example "famsize","Mjob" and "Fjob") and the social life.
  
 \begin{figure}[h]\centering
 \includegraphics[scale=0.4]{variables.jpg}
@@ -169,10 +171,75 @@ We also decide to split our work in four different points answering different qu
 and for each point we used different statistical methods.
 
 
-\section*{1. Correlations and Hypothesis testing}
-In this part we study if there's any correlations between variables, for doing that we calculated Pearson correlation coefficient that measures linear correlation between two sets of data.
+\section{Correlations and Hypothesis testing}
+In this part we study if there are some correlations between variables, for doing that we calculated Pearson correlation coefficient that measures linear correlation between two sets of data.
 
 \begin{itemize}
+\item \textbf{Correlation between grades across semesters}
+\\In order to asses which can be the final grade of the students it is very important to know their trajectory.
+\begin{figure*}[h]
+\centering
+\textbf{G1 vs G2}\par\medskip
+\makebox[\linewidth][c]{%
+\centering
+\subfigure[Heatmap]{\label{fig:a}\includegraphics[scale=0.5]{g1-g2.png}}%
+\subfigure[Scatterplot]{\label{fig:b}\includegraphics[scale=0.5]{scatter_G1-G2.png}}%
+}
+\end{figure*}
+\begin{center}
+\begin{tabular}{|c|c|}
+ \hline
+ $r$ coefficient & $0.8649816303085828$ \\
+\hline
+Standard error & $0.009899545995673489$ \\
+ \hline
+\end{tabular}
+\end{center}
+
+\begin{figure*}[h]
+\centering
+\textbf{G1 vs G3}\par\medskip
+\makebox[\linewidth][c]{%
+\centering
+\subfigure[Heatmap]{\label{fig:a}\includegraphics[scale=0.5]{g1-g3.png}}%
+\subfigure[Scatterplot]{\label{fig:b}\includegraphics[scale=0.5]{scatter_G1-G3.png}}%
+}
+\end{figure*}
+\begin{center}
+\begin{tabular}{|c|c|}
+ \hline
+ $r$ coefficient & $0.8263871247890472$ \\
+\hline
+Standard error & $0.012465870934024606$ \\
+ \hline
+\end{tabular}
+\end{center}
+\newpage
+\begin{figure*}[h]
+\centering
+\textbf{G2 vs G3}\par\medskip
+\makebox[\linewidth][c]{%
+\centering
+\subfigure[Heatmap]{\label{fig:a}\includegraphics[scale=0.5]{g3-g2.png}}%
+\subfigure[Scatteplot]{\label{fig:b}\includegraphics[scale=0.5]{scatter_G2-G3.png}}%
+}
+\end{figure*}
+\begin{center}
+\begin{tabular}{|c|c|}
+ \hline
+ $r$ coefficient & $0.0.9185480035603512$ \\
+\hline
+Standard error & $0.006143590544771005$ \\
+ \hline
+\end{tabular}
+\end{center}
+%%%%
+
+
+
+
+
+From this correlation analysis we expect that the grades of the firs and second semester will have a high impact on the final grade. In addition, the high correlation between G1 and G2 suggest that we may only need one of them to describe the final grade.
 \item \textbf{Correlation between Sex and academic performances}
 \\For the gender correlation we didn't have precise $a$ $priori$ estimations because apparently there's no need to think that belonging to a particular gender can affect grades.
 
@@ -234,6 +301,7 @@ Now a question comes spontaneously: is it true in general that the study time an
 \\Before running the calculation our $a$ $priori$ estimation was that the time of studying influences the grades in a positive way, in theory the more you study the more you succeed in tests. Oppositely, the less you study the more you fail at tests. So, analysing the $r$ coefficient, we got these results:
 \begin{center}
 \begin{tabular}{|p{3cm}|p{4cm}|p{4cm}|}
+\hline
  & Grades & Failures\\
 \hline
 $r$ coefficient & $0.249788689998863$ & $-0.14744054515158145$\\
@@ -267,8 +335,8 @@ correlation between study time and grades, in fact the p value of the first
 one side test is 0, which has as alternative hypothesis that the grades mean of people who study more than five hours is bigger than the other clarify that people who study more have better grades.  But this correlation can not
 be linear as the second test demonstrates. This time the p value of the two
 sides test is 80 percent so we have to accept that the two mean are equals. 
-Additionally, if we can notice that people who spend from five to ten hours 
-studying has even a better mean than people who spend more than ten hours 
+Additionally, we can notice that people who spend from five to ten hours 
+studying have even a better mean than people who spend more than ten hours 
 studying.
 
 
@@ -276,6 +344,7 @@ studying.
 \\Another question could be if the students age can have some consequences on the grades they get. Our $a$ $priori$ expectation was that there is no correlation between the two because each year students have to study subjects appropriate for they ages . We calculated the Pearson's correlation coefficient and obtained:
 \begin{center}
 \begin{tabular}{|p{3cm}|p{4cm}|}
+\hline
 $r$ coefficient & $-0.008415114730320437$ \\
 \hline
 Standard error & $0.0393112727067965$ \\
@@ -311,12 +380,12 @@ the two sides test has a p value of more than 20 percent.
 
 We believe that parents living together can affect students grades in a positive way, probably because a compacted family may create a less stressful environment for students and therefore can get to higher grades.
 \begin{figure}[h]\centering
-%\includegraphics[scale=0.44]{pstatus.png}\quad
-\includegraphics[scale=0.6]{distrib4.png}
+\includegraphics[scale=0.44]{pstatus.png}\quad
+\includegraphics[scale=0.45]{distrib4.png}
 \caption{Correlation between Parents status and Final grades considering that that total amount of students with parents living together is 569 and for the other ones is 80.}
 \end{figure}
 
-In the figure above we can notice that then mean of grades for students with parents living together and the one with parents living apart is the same. In this case there is no relevant difference between the two density so in this case if parents are separated or not doesn't affect their children grades.
+In the figure above we can notice that the grades mean for students with parents living together and the one with parents living apart is the same. In this case there is no relevant difference between the two density so in this case if parents are separated or not doesn't affect their children grades.
 
 \begin{figure}[h]\centering
 \includegraphics[scale=0.6]{hyp_test_Pstatus.png}
@@ -330,6 +399,7 @@ parents status affect the grades of students.
 Now we verify the Pearson's correlation coefficient between Family relationships and Final grades:
 \begin{center}
 \begin{tabular}{|p{3cm}|p{4cm}|}
+\hline
 $r$ coefficient & $0.06336112772983048$ \\
 \hline
 Standard error & $0.03915622520852588$ \\
@@ -349,20 +419,17 @@ In the figure below we show a summary graphic for the correlation between Family
 \caption{Correlation between Family environment and Final grades.}
 \end{figure}
 \\[0.2in]
-\begin{figure}[ht!]\centering
+\begin{figure}[H]\centering
 \includegraphics[scale=0.6]{hyp_test_femrel.png}
 \caption{Hypothesis test based on family relations quality.}
 \end{figure}
 
 Once again the hypothesis test confirm the result obtained by graphic visualization, in fact the two sides test has a p value of 23 percent, 
-which clarify that the two groups have the same mean.
+which means that there are no statistically significant differences between the two groups mean.
 \end{itemize}
-
-
-
+\bigskip
 \newpage
-\section*{2. normality of final grades}
-
+\section{Normality of final grades}
 To understand whether variable G3 has normal distribution we used different
 techniques. Firstly we tried to plot an histogram with the distribution of the variable. Then over the histogram we plotted a line-plot of a gaussian with same mean and same variance as the variable.
 
@@ -376,17 +443,17 @@ techniques. Firstly we tried to plot an histogram with the distribution of the v
 As we can notice from the first plot we can already think that the distributions of the variable is not normal. In fact G3 has too many data in the tails, which underline that it must not be normal.
 
 Just to be sure that our data are actually not normal we then apply more quantitative tests: QQ-plot and Shapiro-Wilks test.
-The results make clear that the three distributions can't be normal, in fact the p value of Shapiro test are smaller than 10e-17, which give no evidence to accept the null hypothesis. The QQ-plot then confirms that we can't believe that the distribution of final grades is normal.
+The results make clear that the distributions can't be normal, in fact the p value of Shapiro test is smaller than $10^{-17}$, which give no evidence to accept the null hypothesis. The QQ-plot then confirms that we can't believe that the distribution of final grades is normal.
 
-We also tried to understand whether it can be normal without the outliers, but again the Shapiro test has a really small p value: 10e-6.
+We also tried to understand whether it can be normal without the outliers, but again the Shapiro test has a really small p value: $10^{-8}$.
 
 Additionally, we conducted a similar analysis on grades G1 and G2 and we arrived at the same result. So, although, we expected that our grades would
 have a normal distribution, which could be useful for regression analysis
 the results clarify that they are not normal.
 
 \newpage
-\section*{3. Explaining Academic Performance with Linear Regression}
-The goal of this section is to find which factors determine the grade of a student. This is similar to what we did in section 2 with hypothesis testing, but now we also want to quantify the contribution of each variable and how they interact between them to explain the grades. We take the grade of the third semester as the response and the rest as explanatory variables. We assume that the underlying model is linear with a Gaussian response. We justify this choice in the model diagnosis and testing goodness of fit. For the time being, the use of linear models is motivated by their high interpretability despite not having as much predicting power as more complex models. \bigskip
+\section{Explaining Academic Performance with Linear Regression}
+The goal of this section is to find which factors determine the grade of a student. This is similar to what we did in section 1 with hypothesis testing, but now we also want to quantify the contribution of each variable and how they interact between them to explain the grades. We take the grade of the third semester as the response and the rest as explanatory variables. We assume that the underlying model is linear with a Gaussian response. We justify this choice in the model diagnosis and testing goodness of fit. For the time being, the use of linear models is motivated by their high interpretability despite not having as much predicting power as more complex models. \bigskip
 
 We begin by removing the students that have a 0 in one of the grades. This decision is justified by the fact that in most education systems around the world is not possible to get a 0. Therefore it may not be a real grade but simply caused by the student moving to another school for example.  Removing these entries will have little impact on our capabilities to explain the data because there are only 17 students in this situation. Now we can have a first look at the data.\bigskip
 \begin{center}
@@ -462,20 +529,19 @@ In the figure above we can see significant differences between the smoothed dens
 \end{figure}
 As you can see the number absences tend to have a negative impact on the final grade. However, we have to be cautious because it is not a steep slope.
 It makes perfect sense that the more absences a student has the lower the grade because the time spent in class is decreased. Nevertheless we also want to look at the relevance of the time that students spend studying in their own.
-\begin{figure}[h]\centering
+\begin{figure}[H]\centering
 \textbf{Study Time}\par\medskip
 \includegraphics[width=0.75\textwidth, height = 0.3\textheight]{pau13.png}
 \caption{Fitted regression line between studytime and final grade}
 \end{figure}
-We are in the same situation as before. Despite having a trend in the data that study time contributes positively to the final grade we must be wary. In fact the slope of the fitted line is not very steep, so it could be possible that there is no statistical significance (proven in sec. 1). \\[0.3in]
+We are in the same situation as before. Despite having a trend in the data that study time contributes positively to the final grade we must be wary. In fact the slope of the fitted line is not very steep, so it could be possible that there is no statistical significance (seen in sec. 1). \\[0.3in]
 \begin{figure}[h]\centering
 \textbf{Mother Education}\par\medskip
 \includegraphics[width=0.75\textwidth, height = 0.3\textheight]{pau14.png}
 \end{figure}
-\newpage
 Finally we see that the level of education of the mother also seems to have a positive contribution to the final grade. Indeed, points corresponding to a higher level of education (the lighter ones) tend to have a higher G3 value.
 \newpage
-\subsection*{3.1 Data Fitting}
+\subsection{Data Fitting}
 The goal in this section is to asses the relationship between the input variables and the final grade. Previously we have got an intuition of which are the individual effects of each explanatory variables but now we want to consider multiple inputs. In addition it is crucial to formalize our procedure beyond descriptive statistics in order to draw rigorous conclusions. We will be trying to fit a linear model of the final grade with respect to the rest of the input variables. In general terms we assume that:
 $$
 Y_i = \beta_0 + \beta_1X_{1i} + ... +\beta_kX_{ki} + \epsilon \quad i = 1,...,n \quad \quad \epsilon \sim \mathcal{N}(0, \sigma^2I)
@@ -580,7 +646,7 @@ Most authors say that variables must be removed when its VIF is higher than 5 an
 Despite removing a variable that was highly correlated with the response we should not expect a significant deterioration in the goodness of fit.
 $$\boxed{R^2 := 0.8957 \quad \quad  \tilde{R}^2 =  0.8942}$$
 \bigskip
-\begin{table}[ht]
+\begin{table}[H]
 \centering
 \begin{tabular}{ccccc}
 \hline
@@ -609,7 +675,7 @@ $$
 \boxed{\textbf{MSE} = 0.7447322 \quad \quad \textbf{MAE} = 0.6739461}
 $$
 \newpage
-\subsection*{3.2 Diagnostics}
+\subsection{Diagnostics}
 In order to fit the data we have made some previous assumptions that are encoded in our model. Now we need to check that these assumptions are valid. In addition we want to detect possible observations that do not fit the model.
 \begin{figure}[ht]\centering
 \textbf{Standarized residuals}\par\medskip
@@ -638,7 +704,7 @@ In the previous plot we can see the fitted values against standarized residuals 
 \\
 In the last figure we can see the cook's distance plot, that measures the influence of the different data points. It summarizes how much the model would change if we remove a data point.
 \newpage
-\section*{4. Student classification}
+\section{Student classification}
 In this section, we want to try to predict if a student will pass the final exam or not. This can be crucial in real life because the fact that a student fails can have many undesirable consequences. On the one hand it can have a huge economic cost in the case that the students have to retake the whole school year. On the other hand, it could demotivate the students and affect their self-esteem. Since now the focus will be more on prediction rather than interpretability we will choose a slightly more complex model. The linear model can be generalized to:
 $$
 y|X \sim F(\theta(x))
@@ -734,23 +800,14 @@ where $C_0, C_1$ indicate the two classes. Hence $w$ can be chosen according to 
     \item[-] \textbf{Pos Pred Values: } 0.0.667
     \item[-] \textbf{Neg Pred Values: } 0.967
 \end{itemize}
-
+We can see that the number of missclassified students has decreased from 10 to 4. However this has caused the model to decrease its accuracy. This is not a surprise because we have forced the model to pay less attention to the passed students which are the majority.
 \newpage
 
-\section*{4. Machine Learning}
+\section{Machine Learning}
 The aim of the Machine Learning section is to apply some of the most popular Machine Learning techniques to our dataset in order to generalise relevant information contained in the data. Before diving into the questions there are some aspects of our methodology that we must clarify.\bigskip
 
-All the models have been trained with a 80 to 20 percentage split for training to testing and implemented using the Sklearn library.
-
-\subsection*{Baseline}
-The baseline is a constant prediction model which outputs always the most frequent class ( in our dataset is 11 ), this achieves an accuracy of 16 percent.
-\subsection*{Logistic Regression}
-Logistic regression is a statistical model that in its basic form uses a logistic function to estimate the probabilities for a multivariate dependent variable: $$p=\frac{1}{1+b^{-\left(\beta_{0}+\beta_{1} x_{1}+\beta_{2} x_{2}+\cdots+\beta_{m} x_{m}\right)}}$$
-Our model with L2 loss and balanced weights achieved an accuracy of 10.7 percent. 
-\subsection*{Random Forest}
-Random forests are an ensemble learning method, used for classification in this case, that operates by constructing a multitude of decision trees at training time and correct for decision trees' habit of overfitting to their training set. Our model with max depth of a tree equal to 2 achieved an accuracy of 12.3 percent.
-\subsection*{XGboost}
-XGboost is a gradient boosting is a machine learning technique, used for classification in this case, which produces a prediction model in the form of an ensemble of weak prediction models, typically decision trees. In particular XGboost is also connected to the Newton-Raphson method. Our model with max depth of a tree equal to 3 achieved an accuracy of 23.8 percent.\bigskip
+All the models have been trained with a 80 to 20 percentage split for training to testing. We have implemented our models using Sklearn and Keras libraries. Finally to determine if a model is non trivial we compare it against a baseline, which is a constant prediction model which outputs either the mean or the median of the training set.
+\bigskip
 
 Once we have established our procedures we can already answer some relevant questions about our data. The easiest and first question which we want to address is the following:
 \begin{itemize}
@@ -762,23 +819,25 @@ To answer this question we tried different models and we compared their performa
 \includegraphics[scale=0.4]{heatmap.png}
 \caption{Correlation between the variables of the preprocessed dataset}
 \end{figure}
-As we can easily observe, there is a high correlation between G3 and G1, G2, we have a low but significant positive correlation between G3 and the study time, the mother and father education and the desire of pursuing a higher education. On the other hand we have a negative correlation between G3 and the number of failures, the number of workday/weekend alchool consumption and the desire not to pursue a higher education. All this information are exactly what we would have expected. Then we split the data in $X$, a matrix containing all the features a part from G3 and $Y$ a column vector containing just the G3 feature. We then split each of them in $X_{\text{train}}$, $X_{\text{test}}$, $Y_{\text{train}}$, $Y_{\text{test}}$. We will use $X_{\text{train}}$ and $Y_{\text{train}}$ to train our model and then we will evaluate the performance using $X_{\text{test}}$ and $Y_{\text{test}}$. To answer this question we have considered the problem as a regressive problem and we have used the following models/approaches. All the models have been trained with a 80 to 20 percentage split for training to testing and implemented using the Sklearn and Keras library. To determine if a model is non trivial we compare it against a baseline, which is a constant prediction model which outputs always the most frequent class ( in our dataset is 11 ), this achieves an accuracy of 16 percent.
+As we can easily observe, there is a high correlation between G3 and G1, G2, we have a low but significant positive correlation between G3 and the study time, the mother and father education and the desire of pursuing a higher education. On the other hand we have a negative correlation between G3 and the number of failures, the number of workday/weekend alchool consumption and the desire not to pursue a higher education. All this information are exactly what we would have expected. Then we split the data in $X$, a matrix containing all the features a part from G3 and $Y$ a column vector containing just the G3 feature. We then split each of them in $X_{\text{train}}$, $X_{\text{test}}$, $Y_{\text{train}}$, $Y_{\text{test}}$. We will use $X_{\text{train}}$ and $Y_{\text{train}}$ to train our model and then we will evaluate the performance using $X_{\text{test}}$ and $Y_{\text{test}}$. To answer this question we have considered the problem as a regressive problem and we have used the following models/approaches.  
+\newpage
 \begin{enumerate}
     \item We used a dense Neural Network with 7 layers with a large number of neurons for each layer. We used 'relu' as the activation function and we chose Adam as the optimizer. In addition to that, in order to prevent overfitting we applied the following early stopping technique. We have taken a subset of the training data as validation data and at the end of each epoch we computed the loss that the current model would have had on the validation data and we have saved the model corresponding to the smallest validation loss. After we have trained our model, we applied the model to $X_{\text{test}}$ in order to obtain the predictions corresponding to $Y_{\text{test}}$ we then have rounded the predictions because G3 has to be an integer value between 0 and 20. We computed the Mean Squared Error between the predicted and the ground-truth grades and we have obtained a value of $1.94$. This information is not enough for us to understand if the model made a good fit or not for G3. Therefore, we tried to visualise the results obtained.
     This is how our results look like compared to the real grades.
     \begin{figure}[h]\centering
-\includegraphics[scale=0.75]{predictions G3 neural nets using all features.PNG}
+\includegraphics[scale=0.7]{predictions G3 neural nets using all features.PNG}
 \end{figure}\\
 As we can see from the first 10 students the predictions are quite accurate, however we cannot really understand how good the predictions are just comparing the true grades and the predicted grades with a table. We will now use different plots to have a better perspective of the fit. \newpage
 The first plot is a scatter plot of the true and predicted grades.\\
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.7]{scatter plot G3 neural nets using all features.png}
+\includegraphics[scale=0.6]{scatter plot G3 neural nets using all features.png}
 \end{figure}
-We would expect the points to be on the line y=x since our predicted grades should be equal to the true grades. As we can see from the plot this is indeed true but of course not all the points lie on the line and some variance around the line is observed. We then used the following line plot to compare the predictions with the true grades for the first 20 students.\\
-    \begin{figure}[h]\centering
-\includegraphics[scale=0.7]{plot G3 neural nets using all features.png}
+We would expect the points to be on the line y=x since our predicted grades should be equal to the true grades. As we can see from the plot this is indeed true but of course not all the points lie on the line and some variance around the line is observed. We then used the following line plot to compare the predictions with the true grades for the first 20 students.
+\begin{figure}[H]\centering
+\includegraphics[scale=0.6]{plot G3 neural nets using all features.png}
 \end{figure}
+\newpage
 Again we observe that the predictions are quite accurate.
 All this plots suggested a good fit but in order to confirm our hypothesis we have used the Kolmogorov-Smirnov test for goodness of fit. Having as a null hypothesis that the distributions of the true grades and the one of the predicted grades were the same distribution we obtained a very large p-value suggesting us that we cannot reject the null hypothesis and consequently that our fit is a good one.
 \item As a second model we have used the support vector machine for regression. We have tuned the hyperparameters of the model using grid-search trying out different kernels, degree and coefficients. This model showed a worse performance compared to neural nets, indeed the Mean Squared Error in this case turned out to be $2.11$. The plots reflect the drop in performance.
@@ -793,8 +852,7 @@ All this plots suggested a good fit but in order to confirm our hypothesis we ha
 However, in this case too, we cannot reject the null hypothesis that the predicted grades and the true grades come from the same distribution using Kolmogorov-Smirnov test for goodness of fit.
 \newline
 \item To further increase the performance we can now train the neural net model on the same dataset but preprocessed such that no outliers are now present in the dataset. In this case we reach a mean squared error of 0.22 and as we can see the predicted grades are almost always correct.\\
-\newline
-\begin{figure}[h]\centering
+\begin{figure}[H]\centering
 \includegraphics[scale=0.7]{predictions G3 neural nets no outliers.PNG}
 \end{figure}
 \begin{figure}[h]\centering
@@ -802,18 +860,15 @@ However, in this case too, we cannot reject the null hypothesis that the predict
 \includegraphics[scale=0.45]{plot G3 neural nets no outliers.png}
 \end{figure}\\
 Clearly also in this case we cannot reject the null hypothesis of the Kolmogorov-Smirnov test for goodness of fit having a p-value of $0.9999999$.
-\item We also tried out two model that obtained mediocre results, logistic regression which is a statistical model that in its basic form uses a logistic function to estimate the probabilities for a multivariate dependent variable: $$p=\frac{1}{1+b^{-\left(\beta_{0}+\beta_{1} x_{1}+\beta_{2} x_{2}+\cdots+\beta_{m} x_{m}\right)}}$$
-Our model with L2 loss and balanced weights achieved an accuracy of 10.7 percent. Also random forests did not predict better than the baseline, they are an ensemble learning method, used for classification in this case, that operates by constructing a multitude of decision trees at training time and correct for decision trees' habit of overfitting to their training set. Our model with max depth of a tree equal to 2 achieved an accuracy of 12.3 percent.
-\item Meanwhile a method that obtained a good result is XGboost, which is a gradient boosting technique, used for classification in this case, which produces a prediction model in the form of an ensemble of weak prediction models, typically decision trees. The idea behind gradient boosting algorithm is to build and increasingly better estimator considering a sequence of weak learners, of fixed size, and try to fix the error of the preceding learner with a new learner. Our model with max depth of a tree equal to 3 achieved an accuracy of 23.8 percent.
+
 \end{enumerate}
-In the last two models we took a different interpretation of the problem than the first three, in fact the problem was posed as a multi-classification problem on the finite set of possible grades G3, therefore on those it was possible to calculate an accuracy score and not a MSE as we obtained for the regression interpreted models.
 As we have seen our models work quite well and we can be satisfied of the reached fit. The next questions that might arise spontaneously is the following
 \begin{itemize}
     \item \textit{Can we train a model which can predict the final grade G3 based on all the other features except the previous grades G1 and G2 ?}
 \end{itemize}
 We have tackled this question training the neural net model on a new $X'_{\text{train}}$ which is exactly the same as the $X_{\text{train}}$ described before a part from the column related to G1 and G2 which are not present in $X'_{\text{train}}$. The same applies to $X'_{\text{test}}$. We followed the exact same procedure described in the answer to the previous question but in this case we have reached a mean squared error of just $11.02$. The following plots testify this poor results.
 \\
-\begin{figure}[h]\centering
+\begin{figure}[H]\centering
 \includegraphics[scale=0.7]{predictions G3 without G1 and G2.PNG}
 \end{figure}
 \begin{figure}[h]\centering
@@ -830,7 +885,7 @@ The next question that we are going to address is the following:
 We are going to answer to this question using a neural network based model since the best results obtained in the previous tasks were reached with this model. Obviously in this case after having split the dataset in training and test, $Y_{\text{train}}$ will be just the column related to the studytime and $X_{\text{train}}$ the columns for all the other features. The same applies to $X_{\text{test}}$ and $Y_{\text{test}}$. In this case when we apply the model to $X_{\text{test}}$ creating the prediction and when we compare them with $Y_{\text{test}}$ we have the following results.\\
 
 \begin{figure}[H]\centering
-\includegraphics[width=0.45\textwidth]{prediction study time neural nets.PNG}
+\includegraphics[width=0.35\textwidth]{prediction study time neural nets.PNG}
 \includegraphics[width=0.45\textwidth]{plot study time neural nets.png}
 \end{figure}
 \\
@@ -841,15 +896,31 @@ The last question that we would like to give an answer to is the following:
 \end{itemize}
 We have used three different models to answer to this question.
 \begin{enumerate}
-    \item A first method based on dense neural networks which scored $0.62$ in accuracy
+    \item A first method based on dense neural networks which scored $0.62$ in accuracy. Here below is displayed the confusion matrix for the given model.
+    \begin{figure}[H]\centering
+\includegraphics[scale=0.4]{confusion matrix neural network.png}
+\end{figure}
+As we can see the model predictions tend to be $0$, therefore the predictions are highly unbalanced. However, the true labels are unbalanced too so the overall accuracy is still over $0.6$ despite the fact that the model does not seem to be learning from the data.
     \item A second method based on Support Vector Machine tuned with grid-search which scored $0.65$ in accuracy 
     \item A third model based on Logistic Regression tuned with grid-search which scored $0.65$ in accuracy.
+    Both the SVM model and the logistic model showed the same confusion matrix which is displayed below.
+       \begin{figure}[H]\centering
+\includegraphics[scale=0.4]{confusion matrix logistic,svm.png}
+\end{figure}
+In this case the model is just predicting zeros so the model is equivalent to the baseline model (the model which classify each new sample always as the most frequent class) and so we can conclude again that the model is not learning and generalizing the data.
 \end{enumerate}
 Recalling the definition of accuracy:
 \begin{align*}
     \text{accuracy} = \frac{\text{number of correctly classified samples}}{\text{number samples}}
 \end{align*}
-we notice that an accuracy around $0.65$ is not high at all. Since we tried different models and we have always tuned the hyperparameters, we can claim that the problem lies in the lack of crucial variables as happened in the studytime analysis. Indeed, as we can observe from the correlation matrix, there are not highly positive or highly negative correlated variables with the romantic relationship variable.
+we notice that an accuracy around $0.65$ is not high at all. Since we tried different models and we have always tuned the hyperparameters, we can claim that the problem lies in the lack of crucial variables as happened in the studytime analysis. Indeed, as we can observe from the correlation matrix displayed at the beginning of the section, there are not highly positive or highly negative correlated variables with the romantic relationship variable.
+\newpage
+\section{Conclusions}
+First and foremost we must point out the importance of education in society. The school stage tends to have a high impact in the future of people, specially on their welfare. As a result, it is crucial to set the education process in such a way that it leads to the highest possible students success. In order to do so, we must analyze which factors contribute the most to the students performance. In this project we tried to better understand how the different aspects of the students life affect their performance at school. In particular, we have studied which variables are either positively or negatively correlated with the grades. Moreover, we tested if we can draw rigorous conclusions from these correlations. We have placed a special focus on the role of gender, study time and family status on the final grade of the student. Apart from the grades, we have also tested other relationships like gender and study time.\bigskip
 
+After our analysis, we have concluded with all the methodologies used that the previous grades are by far the most relevant feature to explain the final grade. For example in machine learning when we excluded the previous grades from the training set the performance of the learned model dropped significantly. This happened independently of the particular model used. At this point, we thought that maybe the rest of the data was just redundant to predict the final grade. However, we tested in section 4 that this is not the case so that the other data is also useful. Therefore we decided to study more in depth the effect of the other variables on the final grade. We conclude that females tend to get higher grades than males. This could be caused by the fact that girls also study more as we have discovered from our hypothesis tests. Nevertheless, although we would expect that the study time is an important factor for the final grade we have found that this is only the case once the student studies at least 5 hours. Therefore the study time variable may not be as relevant as we thought at first. In fact when we built the model to explain the final grades of the students this variable was not necessary to achieve a good fit. Another factor that could seem to be relevant at first sight is the family relations but from our analysis we conclude that it is not the case. It was not necessary to include it in the linear model neither. Other aspects for which we have not tested its statistical significance to predict the grade but that were useful in the linear model are the variables: school, higher, absences and failures. Among these,the one that turned out to be the most important is if the student wants to pursue higher education or not. Finally among the factors that could negatively affect the grade we found through the linear model that the number of absences and failures are the most relevant.
+\\[0.3in]
+Beyond understanding which factors are important for the students' success we wanted to provide a powerful methodology to predict the final grade in advance. This could have many positive implications because then we would be able to asses the possible needs of the students. We mainly built two types of models. On the one hand we have a model to classify students who pass or fail. It achieves $92\%$ general accuracy and we have provided some modifications to achieve the highest possible rate of failed students prediction. On the other hand, we have the most complex models among our methodologies. These achieve very good performance to predict the exact grade of the students with the MSE being lower than 2 on unseen data.
+\bigskip
 
 \end{document}
